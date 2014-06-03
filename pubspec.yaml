@@ -1,0 +1,6 @@
+name: DuckHunt
+version: 1.0.0
+dependencies:
+  browser: any
+dev_dependencies:
+  unittest: any
