@@ -51,5 +51,7 @@ abstract class Duck {
     return false;
   }
 
+  bool isOutOfScreen(int width, int height) => (x < -radius || x > width + radius) && (y < radius || y > height + radius);
+
   paint(CanvasRenderingContext2D context2d);
 }

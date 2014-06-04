@@ -70,9 +70,15 @@ class GameModel {
       lastBirthTime = time;
     }
 
+    Set<Duck> toRemove = new Set();
     for (Duck duck in ducks) {
       duck.update(time);
+      if (duck.isOutOfScreen(canvasWidth, canvasHeight)) {
+        toRemove.add(duck);
+      }
     }
+
+    ducks.removeAll(toRemove);
 
     paint();
     window.requestAnimationFrame(nextFrame);
