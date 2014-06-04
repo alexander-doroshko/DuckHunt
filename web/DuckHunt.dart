@@ -10,7 +10,6 @@ part 'src/speedy_duck.dart';
 
 void main() {
   CanvasElement canvas = querySelector('#canvas');
-  canvas.style.cursor = "none";
 
   GameModel gameModel = new GameModel(canvas);
   gameModel.startGame();
