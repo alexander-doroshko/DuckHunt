@@ -8,9 +8,7 @@ abstract class Duck {
   int x0, y0;
   int speedX, speedY;
 
-  int x, y;
-
-  bool hit = false;
+  int duckX, duckY;
 
   Duck();
 
@@ -20,29 +18,28 @@ abstract class Duck {
     int speedXCoeff = _random.nextInt(2) * 2 - 1; // -1 or 1
 
     duck.birthTime = time;
-    duck.x0 = speedXCoeff > 0 ? -duck.radius : canvasWidth + duck.radius;
-    duck.y0 = _random.nextInt((canvasHeight - duck.radius * 2) as int) + duck.radius;
+    duck.x0 = speedXCoeff > 0 ? -duck.duckRadius : canvasWidth + duck.duckRadius;
+    duck.y0 = _random.nextInt((canvasHeight - duck.duckRadius * 2) as int) + duck.duckRadius;
     duck.speedX = speedXCoeff * duck.speedXMax;
     duck.speedY = _random.nextInt(duck.speedYMax * 2) - duck.speedYMax;
     return duck;
   }
 
-  int get radius;
+  int get duckRadius;
 
   int get speedXMax;
 
   int get speedYMax;
 
   update(int time) {
-    x = x0 + speedX * (time - birthTime) ~/ 1000;
-    y = y0 + speedY * (time - birthTime) ~/ 1000;
+    duckX = x0 + speedX * (time - birthTime) ~/ 1000;
+    duckY = y0 + speedY * (time - birthTime) ~/ 1000;
   }
 
   bool checkHit(int time, int x, int y) {
-    if (!hit && sqrt((x - this.x) * (x - this.x) + (y - this.y) * (y - this.y)) < radius) {
-      hit = true;
-      x0 = this.x;
-      y0 = this.y;
+    if (sqrt((x - this.duckX) * (x - this.duckX) + (y - this.duckY) * (y - this.duckY)) < duckRadius && speedX != 0) {
+      x0 = this.duckX;
+      y0 = this.duckY;
       speedX = 0;
       speedY = 200;
       birthTime = time;
@@ -51,7 +48,11 @@ abstract class Duck {
     return false;
   }
 
-  bool isOutOfScreen(int width, int height) => (x < -radius || x > width + radius) || (y < -radius || y > height + radius);
+  bool isOutOfScreen(int screenWidth, int screenHeight)
+    => duckX < -duckRadius ||
+       duckX > screenWidth + duckRadius ||
+       duckY < -duckRadius ||
+       duckY > screenHeight + duckRadius;
 
   paint(CanvasRenderingContext2D context2d);
 }

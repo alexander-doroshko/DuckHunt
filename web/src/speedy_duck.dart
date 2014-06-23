@@ -6,7 +6,7 @@ class SpeedyDuck extends Duck {
   static ImageElement hitDuckImage = new ImageElement(src:'images/speedyDuck/hit.png');
   int imageIndex = 0;
 
-  int get radius => _leftDuckImages[0].width ~/ 2;
+  int get duckRadius => _leftDuckImages[0].width ~/ 2;
 
   int get speedXMax => 600;
 
@@ -19,11 +19,11 @@ class SpeedyDuck extends Duck {
 
   paint(CanvasRenderingContext2D context2d) {
     var image;
-    if (hit) {
+    if (speedX == 0) {
       image = hitDuckImage;
     } else {
       image = speedX > 0 ? _rightDuckImages[imageIndex] : _leftDuckImages[imageIndex];
     }
-    context2d.drawImage(image, x - image.width ~/ 2, y - image.height ~/ 2);
+    context2d.drawImage(image, duckX - image.width ~/ 2, duckY - image.height ~/ 2);
   }
 }
